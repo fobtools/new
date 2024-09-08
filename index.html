@@ -1,68 +1,79 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>我的网址收藏</title>
-    <link rel="stylesheet" href="style.css">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <title>网站收藏页面</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <!-- 顶部导航栏 -->
-    <header>
-        <div class="logo">我的收藏</div>
-        <input type="text" placeholder="搜索网址..." id="search-bar" class="search-bar">
-        <div class="user-settings">
-            <i class="fas fa-user"></i>
-            <i class="fas fa-bell"></i>
-            <i class="fas fa-moon"></i>
+    <div class="container">
+        <!-- 左上 - 谷歌搜索框 -->
+        <div class="search-box">
+            <form action="https://www.google.com/search" method="get" target="_blank">
+                <input type="text" name="q" placeholder="Search Google...">
+                <button type="submit">搜索</button>
+            </form>
         </div>
-    </header>
 
-    <!-- 侧边栏 -->
-    <aside>
-        <ul>
-            <li class="active">我的收藏</li>
-            <li>工作</li>
-            <li>娱乐</li>
-            <li>学习</li>
-            <li>+ 添加分类</li>
-        </ul>
-    </aside>
-
-    <!-- 主内容区 -->
-    <main>
-        <div class="top-bar">
-            <button class="add-btn"><i class="fas fa-plus"></i> 添加收藏</button>
-            <div class="sort-options">
-                <span>排序：</span>
-                <select id="sort-options">
-                    <option value="name">按名称</option>
-                    <option value="date">按日期</option>
-                    <option value="frequency">按访问频率</option>
-                </select>
+        <!-- 左下 - 收藏的网址 -->
+        <div class="bookmarks">
+            <div class="bookmark" data-url="https://www.google.com">
+                <img src="https://www.google.com/favicon.ico" alt="Google">
+                <p>Google</p>
             </div>
+            <div class="bookmark" data-url="https://www.github.com">
+                <img src="https://github.com/favicon.ico" alt="GitHub">
+                <p>GitHub</p>
+            </div>
+            <!-- 更多网址 -->
         </div>
 
-        <div class="cards" id="cards-container">
-            <!-- 动态插入网址卡片 -->
-        </div>
-    </main>
-
-    <!-- 添加网址的弹窗 -->
-    <div class="modal" id="add-modal">
-        <div class="modal-content">
-            <span class="close-btn">&times;</span>
-            <h2>添加新收藏</h2>
-            <input type="text" id="site-name" placeholder="网站名称">
-            <input type="url" id="site-url" placeholder="网站网址">
-            <button id="save-btn">保存</button>
+        <!-- 右上角 - 设置按钮 -->
+        <div class="settings">
+            <button id="settingsBtn">⚙️ 设置</button>
         </div>
     </div>
 
-    <footer>
-        <p>© 2024 我的收藏. All rights reserved.</p>
-    </footer>
+    <!-- 设置弹窗 -->
+    <div class="settings-modal" id="settingsModal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>设置</h2>
+
+            <!-- 添加网址 -->
+            <div>
+                <h3>添加网址</h3>
+                <input type="text" id="addUrl" placeholder="网站链接">
+                <input type="text" id="addName" placeholder="网站名称">
+                <button id="addBookmarkBtn">添加</button>
+            </div>
+
+            <!-- 更改背景颜色 -->
+            <div>
+                <h3>页面背景颜色</h3>
+                <input type="color" id="bgColorPicker">
+            </div>
+
+            <!-- 调整图标大小 -->
+            <div>
+                <h3>图标大小</h3>
+                <input type="range" id="iconSizeSlider" min="50" max="150" value="100">
+            </div>
+
+            <!-- 圆角大小 -->
+            <div>
+                <h3>图标圆角</h3>
+                <input type="range" id="borderRadiusSlider" min="0" max="50" value="10">
+            </div>
+
+            <!-- 图标透明度 -->
+            <div>
+                <h3>图标透明度</h3>
+                <input type="range" id="iconOpacitySlider" min="0.1" max="1" step="0.1" value="1">
+            </div>
+        </div>
+    </div>
 
     <script src="script.js"></script>
 </body>
