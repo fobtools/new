@@ -1,91 +1,69 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const addBtn = document.querySelector('.add-btn');
-    const modal = document.getElementById('add-modal');
-    const closeModalBtn = document.querySelector('.close-btn');
-    const saveBtn = document.getElementById('save-btn');
-    const cardsContainer = document.getElementById('cards-container');
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我的网址收藏</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- 顶部导航栏 -->
+    <header>
+        <div class="logo">我的收藏</div>
+        <input type="text" placeholder="搜索网址..." id="search-bar" class="search-bar">
+        <div class="user-settings">
+            <i class="fas fa-user"></i>
+            <i class="fas fa-bell"></i>
+            <i class="fas fa-moon"></i>
+        </div>
+    </header>
 
-    // 从 localStorage 获取已有的收藏数据
-    let bookmarks = JSON.parse(localStorage.getItem('bookmarks')) || [];
+    <!-- 侧边栏 -->
+    <aside>
+        <ul>
+            <li class="active">我的收藏</li>
+            <li>工作</li>
+            <li>娱乐</li>
+            <li>学习</li>
+            <li>+ 添加分类</li>
+        </ul>
+    </aside>
 
-    // 渲染收藏卡片
-    function renderBookmarks() {
-        // 清空当前容器
-        cardsContainer.innerHTML = '';
+    <!-- 主内容区 -->
+    <main>
+        <div class="top-bar">
+            <button class="add-btn"><i class="fas fa-plus"></i> 添加收藏</button>
+            <div class="sort-options">
+                <span>排序：</span>
+                <select id="sort-options">
+                    <option value="name">按名称</option>
+                    <option value="date">按日期</option>
+                    <option value="frequency">按访问频率</option>
+                </select>
+            </div>
+        </div>
 
-        // 遍历收藏数据并生成卡片
-        bookmarks.forEach((bookmark, index) => {
-            const card = document.createElement('div');
-            card.classList.add('card');
-            card.innerHTML = `
-                <div class="card-content">
-                    <h3>${bookmark.name}</h3>
-                    <p><a href="${bookmark.url}" target="_blank">${bookmark.url}</a></p>
-                    <p>添加时间: ${bookmark.date}</p>
-                </div>
-                <div class="card-actions">
-                    <i class="fas fa-trash" data-index="${index}"></i>
-                </div>
-            `;
+        <div class="cards" id="cards-container">
+            <!-- 动态插入网址卡片 -->
+        </div>
+    </main>
 
-            // 绑定删除事件
-            const deleteBtn = card.querySelector('.fa-trash');
-            deleteBtn.addEventListener('click', () => {
-                deleteBookmark(index);
-            });
+    <!-- 添加网址的弹窗 -->
+    <div class="modal" id="add-modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <h2>添加新收藏</h2>
+            <input type="text" id="site-name" placeholder="网站名称">
+            <input type="url" id="site-url" placeholder="网站网址">
+            <button id="save-btn">保存</button>
+        </div>
+    </div>
 
-            cardsContainer.appendChild(card);
-        });
-    }
+    <footer>
+        <p>© 2024 我的收藏. All rights reserved.</p>
+    </footer>
 
-    // 打开弹窗
-    addBtn.addEventListener('click', () => {
-        modal.style.display = 'block';
-    });
-
-    // 关闭弹窗
-    closeModalBtn.addEventListener('click', () => {
-        modal.style.display = 'none';
-    });
-
-    // 保存收藏
-    saveBtn.addEventListener('click', () => {
-        const siteName = document.getElementById('site-name').value;
-        const siteUrl = document.getElementById('site-url').value;
-
-        if (siteName === '' || siteUrl === '') {
-            alert('请填写完整信息');
-            return;
-        }
-
-        // 构建新收藏对象
-        const bookmark = {
-            name: siteName,
-            url: siteUrl,
-            date: new Date().toLocaleString(),
-            frequency: 0
-        };
-
-        // 添加到收藏列表并保存到 localStorage
-        bookmarks.push(bookmark);
-        localStorage.setItem('bookmarks', JSON.stringify(bookmarks));
-
-        // 重新渲染收藏卡片并关闭弹窗
-        renderBookmarks();
-        modal.style.display = 'none';
-
-        // 清空输入框
-        document.getElementById('site-name').value = '';
-        document.getElementById('site-url').value = '';
-    });
-
-    // 删除收藏
-    function deleteBookmark(index) {
-        bookmarks.splice(index, 1);
-        localStorage.setItem('bookmarks', JSON.stringify(bookmarks));
-        renderBookmarks();
-    }
-
-    // 初始加载时渲染收藏
-    renderBookmarks();
-});
+    <script src="script.js"></script>
+</body>
+</html>
